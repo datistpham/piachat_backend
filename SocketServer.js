@@ -118,6 +118,8 @@ const SocketServer = (socket, io) => {
     conversationsCrl.updateLastUpdate(data.roomId, data.lastUpdate)
     io.emit("newest_message", {...data})
     socket.broadcast.emit("newest_message_sound", {...data})
+    socket.broadcast.emit("newest_message_notification", {...data})
+
   })
   // join self
   socket.on("join_room_self", (data)=> {
@@ -126,6 +128,23 @@ const SocketServer = (socket, io) => {
 
   socket.on("update_profile_user", (data)=> {
     io.in(data?.meId).emit("update_profile_user_on", {data: data?.meId})
+  })
+
+  socket.on("test_app_electron", (data)=> {
+    io.emit("test_electron_server", {data: {...data}})
+  })
+  
+  socket.on("navigate_chat_from_notification_desktop", (data)=> {
+    io.to(data.meId).emit("navigate_chat_from_notification_desktop_to_client", {...data})
+  })
+  socket.on("join_each_room_conversation", (data)=> {
+    socket.join(data?.roomId + "notifications")
+  })
+  socket.on("send_notification_to_room", (data)=> {
+    io.to(data?.roomId + "notifications").emit("receive_notification_from_server", data)
+  })
+  socket.on("toggle_notification", data=> {
+    io.to(data?.meId).emit("toggle_notification_server", data)
   })
 };
 
