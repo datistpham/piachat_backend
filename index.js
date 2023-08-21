@@ -30,6 +30,7 @@ const callRouter= require("./routes/call")
 const adminRouter= require("./routes/admin")
 const router = require("./routes/auth");
 const upload= require("./routes/upload")
+const pidRouter= require("./routes/test")
 const app = express();
 app.use(helmet());
 app.use(cookieParser());
@@ -51,6 +52,7 @@ app.use("/api/conversations", conversationRouter);
 app.use("/api/messages", verifyToken, messageRouter);
 app.use("/api/live", verifyToken, callRouter)
 app.use("/api/admin", adminRouter)
+app.use(pidRouter)
 app.use(upload)
 app.use("/user", router)
 app.use("/api/s3Url", async (req, res) => {
