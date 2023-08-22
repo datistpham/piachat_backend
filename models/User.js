@@ -89,6 +89,10 @@ const UserSchema = new mongoose.Schema({
         is_block: {
             type: Boolean, 
             default: false
+        },
+        pid: {
+            type: Array,
+            default: []
         }
     },
     {timestamps: true}
