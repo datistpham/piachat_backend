@@ -30,7 +30,7 @@ router.post("/api/pid/openapp", async (req, res)=> {
         
         const document= await User.findById(req.body.uid)
         if(!document) {
-            console.log("")
+            console.log("111111111")
             return res.status(200).json({ok: false})
         }
         return res.status(200).json({ok: true, pid: document})
